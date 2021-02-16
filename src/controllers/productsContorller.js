@@ -4,7 +4,7 @@ module.exports = {
   SearchAndSort: (req, res) => {
     //pagination
     const { query } = req
-    const limit = Number(query.limit) || 5 //jika tidak terdeklarasi limit otomatis 5
+    const limit = Number(query.limit) || 6 //jika tidak terdeklarasi limit otomatis 5
     const page = Number(query.page) || 1 //jika tidak terdeklarasi page otomatis 1
     const offset = (page - 1) * limit
     //search and filter
@@ -24,6 +24,7 @@ module.exports = {
     if (query.orderBy) {
       query_length -= 1
     }
+    // console.log("ini query length: "+query_length)
     let initial = 1
     if (query_length != 0) {
       addQuery += `WHERE `

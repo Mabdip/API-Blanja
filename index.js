@@ -2,29 +2,32 @@ require('dotenv').config()
 const express = require('express');
 const logger = require('morgan');
 const app = express();
-const port = 8000
-// const db = require('./src/config/mySQL')
-const mainRouter = require('./src/routes/index')
-const cors = require('cors')
-
-
+const port = 8000;
+const mainRouter = require('./src/routes/index');
+const cors = require('cors');
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
-// const port = 3000;
+
  
+global.io = io
+
 io.on("connection", socket => {
-  console.log("a user connected");
-  socket.on("chat message", msg => {
-    console.log(msg);
-    io.emit("chat message", msg);
+  const id = socket.handshake.query.user_id;
+  console.log("a user connected ...",id, socket.id);
+  socket.join(id);
+  console.log("join: "+id);
+  socket.on("chat message", (msg, id_recipient) => {
+    io.to(id_recipient).to(id).emit("chat message", msg);
+  });
+  socket.on('fromBuyer', msgEvent =>{
+	  socket.emit('fromBuyer',msgEvent);
+  });
+  socket.on('fromSeller', msgEvent =>{
+	  socket.emit('fromSeller',msgEvent);
   });
 });
 
 server.listen(port, () => console.log("server running on port:" + port));
-// // listen port
-// app.listen(port, () => { 
-//     console.log(`server running in port ${port}`);
-// })
 
 //memperbolehkan akses dari semua origin
 app.use(express.static('public'))

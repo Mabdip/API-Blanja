@@ -11,7 +11,7 @@ productRouter.post("/addProduct", checkToken.isLogin, checkToken.isSeller, multi
 //count UserProducts
 productRouter.get("/getCountProduct/:id", checkToken.isLogin, checkToken.isSeller, productController.getCountProduct)
 //get All Product based User
-productRouter.get('/userProduct/:id', checkToken.isLogin, checkToken.isSeller, productController.getProductFromUser)
+productRouter.get('/userProduct', checkToken.isLogin, checkToken.isSeller, productController.getProductFromUser)
 //get Data Product 
 productRouter.get("/getProductData/:id", productController.getProductId)
 //updateProd

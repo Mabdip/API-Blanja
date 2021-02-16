@@ -1,5 +1,5 @@
-const { getUserDetails } = require('../models/userModel')
-const userModel = require('../models/userModel')
+const { getUserDetails } = require('./../models/userModel')
+const userModel = require('./../models/userModel')
 
 module.exports = {
     addReview: (req, res) => {
@@ -24,7 +24,7 @@ module.exports = {
     },
 
     getUserDetails: (req, res) => {
-        const { id } = req.params
+        const id = req.decodedToken.user_id
         userModel.getUserDetails(id)
             .then((result) => {
                 res.status(result.status).json(result)
@@ -33,12 +33,25 @@ module.exports = {
             })
     },
     changePassword: (req, res) => {
-        const { body } = req
+        let { body } = req
+        body = {
+            ...body,
+            email:req.decodedToken.email
+        }
         userModel.changePassword(body)
             .then((result) => {
                 res.status(result.status).json(result)
             }).catch((error) => {
                 res.status(error.status).json(error)
             })
+    },
+    getNameUser: (req, res) =>{
+        const {id} = req.params
+        userModel.getNameUser(id)
+        .then((result) => {
+            res.status(result.status).json(result)
+        }).catch((error) => {
+            res.status(error.status).json(error)
+        })
     }
 }

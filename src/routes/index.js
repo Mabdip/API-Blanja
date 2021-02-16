@@ -9,20 +9,17 @@ const trxRouter = require('./trxRouter');
 const addressRouter = require ('./addressRouter');
 const userRouter = require ('./userRouter');
 const ekspedisiRouter = require ('./ekspedisiRouter');
-
+const chatRouter = require('./chatRouter');
 //endpoint handler
 mainRouter.use("/", welcomeRouter);
 mainRouter.use("/products", productsRouter);
-
 mainRouter.use("/product",productRouter); 
-
-
 mainRouter.use("/products", productsRouter);
 mainRouter.use("/address", addressRouter);
 mainRouter.use("/auth", authRouter);
 mainRouter.use("/transaksi", trxRouter); 
 mainRouter.use("/user", userRouter);
 mainRouter.use("/kurir", ekspedisiRouter);
-
+mainRouter.use("/chat", chatRouter);
 
 module.exports = mainRouter;

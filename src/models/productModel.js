@@ -30,7 +30,7 @@ module.exports = {
     getProductFromUser: (id) => {
         return new Promise((resolve, reject) => {
             const queryStr =
-                `SELECT p.id, p.product_name, c.category_name, cl.color_name, s.size_name, cd.condition_name, p.product_img, p.product_price, p.created_at
+            `SELECT p.id, p.product_name, c.category_name, cl.color_name, s.size_name, cd.condition_name, p.product_img, p.product_price, p.created_at
             FROM products p
             JOIN category c ON p.category_id = c.id
             JOIN color cl ON p.color_id = cl.id
@@ -57,7 +57,7 @@ module.exports = {
     getProductId: (id) => {
         return new Promise((resolve, reject) => {
             const queryStr =
-            `SELECT p.id, p.product_name,p.category_id, c.category_name,p.color_id, cl.color_name,p.size_id, s.size_name,p.condition_id, cd.condition_name,p.product_img, p.product_price,p.product_desc, u.storeName,IFNULL(rev.rating,0) as rating, IFNULL(rev.dibeli,0) as dibeli
+            `SELECT p.id, p.user_id as seller_id, u.fullname, p.product_name,p.category_id, c.category_name,p.color_id, cl.color_name,p.size_id, s.size_name,p.condition_id, cd.condition_name,p.product_img, p.product_price,p.product_desc, u.storeName,IFNULL(rev.rating,0) as rating, IFNULL(rev.dibeli,0) as dibeli
             FROM products p
             JOIN category c ON p.category_id = c.id
             JOIN color cl ON p.color_id = cl.id
@@ -70,6 +70,7 @@ module.exports = {
                 if (!err) {
                     resolve({
                         status: 200,
+                        message: "Get produict by id",
                         data: data
                     })
                 } else {
