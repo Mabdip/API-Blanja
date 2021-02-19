@@ -5,7 +5,7 @@ module.exports = {
         let { body } = req
         body = {
             ...body,
-            created_at: new Date(Date.now())
+            create_at: new Date(Date.now())
         }
         chatModel.addNewMessage(body)
             .then((result) => {
@@ -37,8 +37,8 @@ module.exports = {
             })
     },
     getNewMessage: (req, res) => {
-        const { chatRoom } = req.params
-        chatModel.getNewMessage(chatRoom)
+        const { roomChat } = req.params
+        chatModel.getNewMessage(roomChat)
             .then((result) => {
                 res.status(result.status).json(result)
             }).catch((error) => {
