@@ -10,6 +10,7 @@ const addressRouter = require ('./addressRouter');
 const userRouter = require ('./userRouter');
 const ekspedisiRouter = require ('./ekspedisiRouter');
 const chatRouter = require('./chatRouter');
+const notifRouter = require('./notifRouter');
 //endpoint handler
 mainRouter.use("/", welcomeRouter);
 mainRouter.use("/products", productsRouter);
@@ -21,5 +22,6 @@ mainRouter.use("/transaksi", trxRouter);
 mainRouter.use("/user", userRouter);
 mainRouter.use("/kurir", ekspedisiRouter);
 mainRouter.use("/chat", chatRouter);
+mainRouter.use("/notif", notifRouter);
 
 module.exports = mainRouter;

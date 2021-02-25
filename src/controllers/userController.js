@@ -53,5 +53,31 @@ module.exports = {
         }).catch((error) => {
             res.status(error.status).json(error)
         })
+    },
+    changePhoto: (req, res) => {
+        const {id} = req.decodedToken;
+        const image = req.filePath;
+        userModel.getOldPhoto(id)
+            .then((result) => {
+                const imageToDelete = result.image
+                userModel.updatePhoto(image, id)
+                    .then((result) => {
+                        if (imageToDelete != '/images/default.jpg') {
+                            fs.unlink(`public${imageToDelete}`, (err) => {
+                                if (err) {
+                                    console.log(err)
+                                    return
+                                } else {
+                                    console.log(`public${image} deleted`)
+                                }
+                            })
+                        }
+                        res.status(result.status).json(result)
+                    }).catch((error) => {
+                        res.status(error.status).json(error)
+                    })
+            }).catch((error) => {
+                res.status(error.status).json(error)
+            })
     }
 }
